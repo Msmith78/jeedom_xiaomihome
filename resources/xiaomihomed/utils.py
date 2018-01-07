@@ -56,6 +56,9 @@ def clean_result(device,result):
 		if 'get_status' in result and 'state' in result['get_status']:
 			if result['get_status']['state'] in globals.DICT_STATE_WIFI[device]:
 				result['get_status']['state'] = globals.DICT_STATE_WIFI[device][result['get_status']['state']]
+		if 'status' in result and 'snm' in result['status']:
+			if result['status']['snm'] in globals.DICT_STATE_WIFI[device]:
+					result['status']['snm'] = globals.DICT_STATE_WIFI[device][result['status']['snm']]
 	if device in globals.DICT_ERROR_WIFI:
 		if 'get_status' in result and 'error_code' in result['get_status']:
 			if result['get_status']['error_code'] in globals.DICT_ERROR_WIFI[device]:

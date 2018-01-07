@@ -38,39 +38,9 @@
 				}
             },
 			{
-                "name": "Smart Midnight Light",
-                "type": "info",
-                "subtype": "binary",
-                "display": {
-					"generic_type": "DONT"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "logicalId": "status::bl",
-                "template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-			{
-                "name": "Auto CCT",
-                "type": "info",
-                "subtype": "binary",
-                "display": {
-					"generic_type": "DONT"
-                },
-                "isVisible": 1,
-                "isHistorized": 0,
-                "logicalId": "status::ac",
-                "template": {
-					"dashboard": "line",
-					"mobile": "line"
-				}
-            },
-			{
                 "name": "Scene active",
                 "type": "info",
-                "subtype": "numeric",
+                "subtype": "string",
                 "display": {
 					"generic_type": "DONT"
                 },
@@ -167,50 +137,6 @@
                 "logicalId": "midnight"
             },
 			{
-                "name": "Smart Midnight Light on",
-                "type": "action",
-                "subtype": "other",
-                "configuration" : {
-        			"request" : "enable_bl",
-					"params" : "[1]"
-        		},
-                "isVisible": 0,
-                "logicalId": "veilleuseon"
-            },
-            {
-                "name": "Smart Midnight Light off",
-                "type": "action",
-                "subtype": "other",
-                "configuration" : {
-        			"request" : "enable_bl",
-					"params" : "[0]"
-        		},
-                "isVisible": 0,
-                "logicalId": "veilleuseoff"
-            },
-			{
-                "name": "Auto CCT on",
-                "type": "action",
-                "subtype": "other",
-                "configuration" : {
-        			"request" : "enable_ac",
-					"params" : "[1]"
-        		},
-                "isVisible": 0,
-                "logicalId": "ccton"
-            },
-            {
-                "name": "Auto CCT off",
-                "type": "action",
-                "subtype": "other",
-                "configuration" : {
-        			"request" : "enable_ac",
-					"params" : "[0]"
-        		},
-                "isVisible": 0,
-                "logicalId": "cctoff"
-            },
-			{
                 "name": "Luminosité",
                 "type": "action",
                 "subtype": "slider",
@@ -259,6 +185,76 @@
 				"unite": "%",
                 "isVisible": 0,
                 "logicalId": "status::cct"
+            },
+			{
+                "name": "5min",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "delay_off",
+					"params" : "[300]"
+        		},
+                "isVisible": 1,
+                "logicalId": "dv5min"
+            },
+			{
+                "name": "10min",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "delay_off",
+					"params" : "[600]"
+        		},
+                "isVisible": 1,
+                "logicalId": "dv10min"
+            },
+			{
+                "name": "30min",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "delay_off",
+					"params" : "[1800]"
+        		},
+                "isVisible": 1,
+                "logicalId": "dv30min"
+            },
+			{
+                "name": "1h",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "delay_off",
+					"params" : "[3600]"
+        		},
+				"value" : "Temps restant",
+                "isVisible": 1,
+                "logicalId": "dv1h"
+            },
+			{
+                "name": "Compte rebourd",
+                "type": "action",
+                "subtype": "slider",
+				"display": {
+					"forceReturnLineBefore": 1
+                },
+                "configuration" : {
+        			"request" : "delay_off",
+                    "minValue" : 1,
+                    "maxValue" : 86400,
+					"params" : "[#slider#]"
+        		},
+				"value" : "Temps restant",
+                "isVisible": 0,
+                "logicalId": "dv"
+            },
+			{
+                "name": "Temps restant",
+                "type": "info",
+                "subtype": "string",
+				"unite": "sec",
+                "isVisible": 1,
+                "logicalId": "status::dv"
             },
 			 {
                 "name": "Rafraichir",

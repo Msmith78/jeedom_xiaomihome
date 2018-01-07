@@ -30,6 +30,7 @@ DICT_REFRESH_WIFI ={'purifier' : ['{"id":1,"method":"get_prop","params":["power"
 					'socket' :['{"id":1,"method":"get_prop","params":["power","temperature"]}'],\
 					'fan' :['{"id":1,"method":"get_prop","params":["temp_dec", "humidity", "angle", "speed", "poweroff_time", "power", "ac_power", "battery", "angle_enable", "speed_level", "natural_level", "child_lock", "buzzer", "led_b"]}'],\
 					'philipsceiling' :['{"id":1,"method":"get_prop","params":["power", "bright", "snm", "dv", "cctsw", "bl", "mb"]}','{"id":1,"method":"get_prop","params":["ac", "ms", "sw", "cct"]}'],\
+					'philipsmono' :['{"id":1,"method":"get_prop","params":["power","bright","cct","snm","dv"]}'],\
 	}
 
 DICT_STATE_WIFI ={'vacuum' : {
@@ -45,6 +46,13 @@ DICT_STATE_WIFI ={'vacuum' : {
 								10: 'En pause',
 								11: 'Nettoyage Spot',
 								12: 'Erreur'
+							},
+				  'philipsmono' : {
+									0: 'Aucun',
+									1: 'Eclatant',
+									2: 'Télé',
+									3: 'Chaud',
+									4: 'Nuit'
 							}
 }
 
@@ -53,20 +61,20 @@ DICT_ERROR_WIFI ={'vacuum' : {
 								1: "Problème sur le laser",
 								2: "Problème capteur de collision",
 								3: "Mes roues ont un soucis",
-								4: "Nettoyez mes capteurs de sols",
-								5: "Nettoyez la brosse",
-								6: "Nettoyez la brossette",
+								4: "Nettoyer mes capteurs de sols",
+								5: "Nettoyer la brosse",
+								6: "Nettoyer la brossette",
 								7: "Ma roue principale est bloquée",
 								8: "Je suis bloqué",
-								9: "Où est mon bac à poussière",
-								10: "Nettoyez le filtre",
+								9: "Où est mon bac à poussières",
+								10: "Nettoyer le filtre",
 								11: "Bloqué sur ma barrière",
 								12: "Batterie faible",
 								13: "Problème de charge",
 								14: "Problème de batterie",
 								15: "Mes détecteurs sont sales",
-								16: "Placez-moi sur une surface plane",
-								17: "Problème, redémarrez-moi",
+								16: "Placez moi sur une surface plane",
+								17: "Problème, redémarrez moi",
 								18: "Problème d'aspiration",
 								19: "La station de charge n'est pas alimentée",
 							}

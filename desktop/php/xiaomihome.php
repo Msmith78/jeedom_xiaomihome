@@ -306,7 +306,7 @@ if (class_exists('blea')){
           <a class="btn btn-primary btn-sm eqLogicAction pull-right syncinfo" id="btn_sync"><i class="fa fa-spinner" title="{{Récupérer les infos}}"></i> {{Récupérer les infos}}</a><br/><br/>
           <form class="form-horizontal">
             <fieldset>
-			<div class="form-group" id="newmodelfield2">
+              <div class="form-group" id="newmodelfield2">
                 <label class="col-sm-3 control-label">{{Equipement}}</label>
                 <div class="col-sm-8">
                   <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="applyDevice2">
@@ -329,7 +329,7 @@ if (class_exists('blea')){
                         return strcmp($a['name'], $b['name']);
                       });
                       foreach ($group as $key => $info) {
-						  if ($info['groupe'] == 'Aquara') {
+                        if ($info['groupe'] == 'Aquara') {
                           break;
                         }
                         if ($key == 0) {
@@ -377,7 +377,7 @@ if (class_exists('blea')){
                   </select>
                 </div>
               </div>
-			  
+
               <div class="form-group">
                 <label class="col-sm-3 control-label">{{Type}}</label>
                 <div class="col-sm-3">

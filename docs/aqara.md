@@ -25,8 +25,8 @@ Pour cela, il faut :
 ### Création des équipements dans Jeedom
 
 Une fois que votre **passerelle Xiaomi** est ajoutée dans Jeedom, les équipements Aqara seront créés automatiquement. Si cela vous semble long, deux choses à savoir :
-* Pour les **capteurs** Aqara, c'est à leur remontée d'information qui déclenche la création. La fréquence varie donc en fonction du modèle et de ses caractéristiques.
-* Pour les **interrupteurs** et les **boutons** Aqara, il peut être nécessaire de les activer pour avoir la création des commandes (un clic par exemple).
+* Pour les **capteurs** Aqara, c'est la remontée d'information qui déclenche la création de l'équipement dans Jeedom. La fréquence varie donc en fonction du modèle et de ses caractéristiques. (par exemple : soufflez sur un capteur de température permettra de changer la valeur de la température et remontera donc l'information)
+* Pour les **interrupteurs** et les **boutons** Aqara, il peut être nécessaire de les activer pour avoir la création des commandes. (par exemple : appuyez sur un des boutons)
 
 ### Commandes des équipements compatibles
 

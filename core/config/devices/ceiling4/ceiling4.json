@@ -1,0 +1,338 @@
+{
+    "ceiling4": {
+        "name": "Plafonnier 650 RGB",
+		"groupe" : "Yeelight",
+		"configuration" : {
+			"model" : "ceiling4",
+            "type" : "yeelight"
+		},
+        "commands": [
+            {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Statut",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Définir couleur RGB",
+                "type": "action",
+                "subtype": "color",
+                "display": {
+					"generic_type": "LIGHT_SET_COLOR"
+                },
+                "configuration" : {
+        			"request" : "rgb"
+        		},
+                "value": "Couleur RGB",
+                "isVisible": 1,
+                "logicalId": "rgbAct"
+            },
+            {
+                "name": "Toggle",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-toggle-on\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "toggle"
+        		},
+                "isVisible": 0,
+                "logicalId": "toggle"
+            },
+            {
+                "name": "Allumer",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>",
+					"generic_type": "LIGHT_ON"
+                },
+                "configuration" : {
+        			"request" : "turn on"
+        		},
+                "isVisible": 1,
+                "value": "Luminosité Info",
+                "logicalId": "on"
+            },
+            {
+                "name": "Eteindre",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>",
+					"generic_type": "LIGHT_OFF"
+                },
+                "configuration" : {
+        			"request" : "turn off"
+        		},
+                "isVisible": 1,
+                "value": "Luminosité Info",
+                "logicalId": "off"
+            },
+            {
+                "name": "Lumière de Lune",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "DONT",
+                    "icon": "<i class=\"fa fa-moon-o\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "temperature 2700"
+        		},
+                "isVisible": 1,
+                "logicalId": "temperatureMoon"
+            },
+            {
+                "name": "Lumière de Soleil",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "DONT",
+                    "icon": "<i class=\"fa fa-sun-o\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "temperature 6500"
+        		},
+                "isVisible": 1,
+                "logicalId": "temperatureSun"
+            },
+            {
+                "name": "Extinction programmée",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "cron",
+                    "minValue" : 1,
+                    "maxValue" : 300
+        		},
+                "isVisible": 0,
+                "logicalId": "cron"
+            },
+            {
+                "name": "Enchainement",
+                "type": "action",
+                "subtype": "message",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>",
+                    "message_disable": 1,
+                    "title_placeholder" : "Enchainement"
+                },
+                "configuration" : {
+        			"request" : "flow"
+        		},
+                "isVisible": 0,
+                "logicalId": "flow"
+            },
+            {
+                "name": "Stop Enchainement",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-stop\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "stop"
+        		},
+                "isVisible": 0,
+                "logicalId": "stop"
+            },
+            {
+                "name": "Luminosité",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "LIGHT_SLIDER",
+					"forceReturnLineBefore": 1
+                },
+                "configuration" : {
+        			"request" : "brightness",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "value": "Luminosité Info",
+                "isVisible": 1,
+                "logicalId": "brightnessAct"
+            },
+            {
+                "name": "Luminosité Info",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "LIGHT_STATE"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "brightness",
+                "template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            },
+            {
+                "name": "Température de blanc info",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "temperature",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Température de blanc",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"request" : "temperature",
+                    "minValue" : 1700,
+                    "maxValue" : 6500
+        		},
+                "value": "Température de blanc info",
+                "isVisible": 1,
+                "logicalId": "temperatureAct"
+            },
+            {
+                "name": "Mode",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "color_mode",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Définir couleur HSV",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"request" : "hsv",
+                    "minValue" : 0,
+                    "maxValue" : 253
+        		},
+                "value": "Couleur HSV",
+                "isVisible": 0,
+                "logicalId": "hsvAct"
+            },
+            {
+                "name": "Couleur HSV",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "hsv",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Définir saturation HSV",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "configuration" : {
+        			"request" : "saturation",
+                    "minValue" : 0,
+                    "maxValue" : 100
+        		},
+                "value": "Saturation HSV",
+                "isVisible": 0,
+                "logicalId": "saturationAct"
+            },
+            {
+                "name": "Saturation HSV",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "saturation",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Couleur RGB",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "LIGHT_COLOR"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "rgb",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "refresh"
+        		},
+                "isVisible": 1,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

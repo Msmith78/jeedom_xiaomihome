@@ -1,0 +1,80 @@
+{
+	"mija360": {
+		"name": "Xiaomi Mijia 360 1080P",
+		"groupe" : "Wifi",
+		"configuration" : {
+			"model" : "mija360",
+			"type" : "wifi"
+		},
+        "commands": [
+            {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Statut",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::power",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Allumer",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-lightbulb-o\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_power",
+					"params" : "[\"on\"]"
+        		},
+                "isVisible": 1,
+                "logicalId": "on"
+            },
+            {
+                "name": "Eteindre",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-power-off\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_power",
+					"params" : "[\"off\"]"
+        		},
+                "isVisible": 1,
+                "logicalId": "off"
+            },
+	    {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "isVisible": 1,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

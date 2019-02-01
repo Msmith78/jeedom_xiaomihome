@@ -36,6 +36,7 @@ $eqLogics = xiaomihome::byType('xiaomihome');
 			<th>{{Batterie}}</th>
 			<th>{{Dernière communication}}</th>
 			<th>{{Date création}}</th>
+			<th>{{Exclure}}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -84,8 +85,62 @@ foreach ($eqLogics as $eqLogic) {
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('type') . '</span></td>';
 	echo '<td>' . $battery_status . '</td>';
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
-	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('createtime') . '</span></td>';
+	if ($eqLogic->getConfiguration('type') == 'aquara' && $eqLogic->getConfiguration('model') != 'gateway') {
+		echo '<td><center><span class="label label-danger exclusion" style="font-size : 1em; cursor : pointer;" data-id="' . $eqLogic->getConfiguration('sid') . '" data-gateway="' . $eqLogic->getConfiguration('gateway') . '" style="font-size : 1em;"><i class="fa fa-times"></i></span></center></td></tr>';
+	} else {
+		echo '<td></td></tr>';
+	}
 }
 ?>
 	</tbody>
 </table>
+<script>
+$('.exclusion').on('click', function () {
+  var id = $(this).attr('data-id');
+  var gateway = $(this).attr('data-gateway');
+  var dialog_title = '';
+  var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
+  dialog_title = '{{Démarrer l\'exclusion de ce module}}';
+  dialog_message += '<label class="control-label" > {{Etes vous sûr de vouloir exclure ce module ?}} </label> ' +
+ 
+  ' ';
+  dialog_message += '</form>';
+  bootbox.dialog({
+    title: dialog_title,
+    message: dialog_message,
+    buttons: {
+       "{{Annuler}}": {
+          className: "btn-danger",
+          callback: function () {
+          }
+      },
+      success: {
+        label: "{{Démarrer}}",
+        className: "btn-success",
+        callback: function () {
+			$.ajax({
+        type: "POST", 
+        url: "plugins/xiaomihome/core/ajax/xiaomihome.ajax.php", 
+        data: {
+            action: "ExclusionGateway",
+            id: id,
+            gateway: gateway,
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) { 
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+        }
+    });
+     }
+ },
+}
+});
+});
+</script>

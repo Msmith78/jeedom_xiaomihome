@@ -1,0 +1,287 @@
+{
+	"vacuum2": {
+		"name": "Robot Aspirateur V2",
+		"groupe" : "Wifi",
+		"configuration" : {
+			"model" : "vacuum2",
+			"type" : "wifi",
+			"battery_type" : "Batterie"
+		},
+		"commands": [
+			{
+				"name": "Online",
+				"type": "info",
+				"subtype": "binary",
+				"display": {
+					"generic_type": "DONT"
+				},
+				"isVisible": 0,
+				"isHistorized": 0,
+				"logicalId": "online",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			{
+				"name": "Statut",
+				"type": "info",
+				"subtype": "string",
+				"display": {
+					"generic_type": "DONT"
+				},
+				"isVisible": 1,
+				"isHistorized": 0,
+				"logicalId": "get_status::state",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			{
+				"name": "Batterie",
+				"type": "info",
+				"subtype": "numeric",
+				"display": {
+					"generic_type": "DONT"
+				},
+				"isVisible": 0,
+				"isHistorized": 0,
+				"unite" : "%",
+				"logicalId": "get_status::battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			{
+				"name": "Aspiration",
+				"type": "info",
+				"subtype": "numeric",
+				"display": {
+					"generic_type": "DONT"
+				},
+				"isVisible": 0,
+				"isHistorized": 0,
+				"logicalId": "get_status::fan_power",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			{
+				"name": "Surface nettoyée",
+				"type": "info",
+				"subtype": "numeric",
+				"unite" : "m2",
+				"display": {
+					"generic_type": "DONT"
+				},
+				"isVisible": 1,
+				"isHistorized": 0,
+				"logicalId": "get_status::clean_area",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			{
+				"name": "Durée nettoyage",
+				"type": "info",
+				"subtype": "string",
+				"display": {
+					"generic_type": "DONT"
+				},
+				"isVisible": 1,
+				"isHistorized": 0,
+				"logicalId": "get_status::clean_time",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			{
+				"name": "Erreur",
+				"type": "info",
+				"subtype": "string",
+				"display": {
+					"generic_type": "DONT"
+				},
+				"isVisible": 1,
+				"isHistorized": 0,
+				"logicalId": "get_status::error_code",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+			},
+			{
+				"name": "Puissance Aspiration",
+				"type": "action",
+				"subtype": "slider",
+				"configuration" : {
+					"request" : "set_custom_mode",
+					"minValue" : 0,
+					"maxValue" : 100,
+					"params" : "[#slider#]"
+				},
+				"value": "Aspiration",
+				"isVisible": 1,
+				"logicalId": "fanspeedAct"
+			},
+			{
+				"name": "Mode Calme",
+				"type": "action",
+				"subtype": "other",
+				"configuration" : {
+					"request" : "set_custom_mode",
+					"params" : "[101]"
+				},
+				"value": "Aspiration",
+				"isVisible": 0,
+				"logicalId": "fanspeedAct::quiet"
+			},
+			{
+				"name": "Mode Balancé",
+				"type": "action",
+				"subtype": "other",
+				"configuration" : {
+					"request" : "set_custom_mode",
+					"params" : "[102]"
+				},
+				"value": "Aspiration",
+				"isVisible": 0,
+				"logicalId": "fanspeedAct::balanced"
+			},
+			{
+				"name": "Mode Turbo",
+				"type": "action",
+				"subtype": "other",
+				"configuration" : {
+					"request" : "set_custom_mode",
+					"params" : "[103]"
+				},
+				"value": "Aspiration",
+				"isVisible": 0,
+				"logicalId": "fanspeedAct::turbo"
+			},
+			{
+				"name": "Mode Max",
+				"type": "action",
+				"subtype": "other",
+				"configuration" : {
+					"request" : "set_custom_mode",
+					"params" : "[104]"
+				},
+				"value": "Aspiration",
+				"isVisible": 0,
+				"logicalId": "fanspeedAct::max"
+			},
+			{
+				"name": "Mode Serpillère",
+				"type": "action",
+				"subtype": "other",
+				"configuration" : {
+					"request" : "set_custom_mode",
+					"params" : "[105]"
+				},
+				"value": "Aspiration",
+				"isVisible": 0,
+				"logicalId": "fanspeedAct::mop"
+			},
+			{
+				"name": "Démarrer",
+				"type": "action",
+				"subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-play\"><\/i>"
+				},
+				"configuration" : {
+					"request" : "app_start"
+				},
+				"isVisible": 1,
+				"logicalId": "start"
+			},
+			{
+				"name": "Arrêter",
+				"type": "action",
+				"subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-stop\"><\/i>"
+				},
+				"configuration" : {
+					"request" : "app_stop"
+				},
+				"isVisible": 1,
+				"logicalId": "stop"
+			},
+			{
+				"name": "Pause",
+				"type": "action",
+				"subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-pause\"><\/i>"
+				},
+				"configuration" : {
+					"request" : "app_pause"
+				},
+				"isVisible": 1,
+				"logicalId": "pause"
+			},
+			{
+				"name": "Home",
+				"type": "action",
+				"subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-home\"><\/i>"
+				},
+				"configuration" : {
+					"request" : "app_charge"
+				},
+				"isVisible": 1,
+				"logicalId": "home"
+			},
+			{
+				"name": "Spot",
+				"type": "action",
+				"subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-dot-circle-o\"><\/i>"
+				},
+				"configuration" : {
+					"request" : "app_spot"
+				},
+				"isVisible": 1,
+				"logicalId": "spot"
+			},
+			{
+				"name": "Trouver",
+				"type": "action",
+				"subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-globe\"><\/i>"
+				},
+				"configuration" : {
+					"request" : "find_me",
+					"params" : "[\"\"]"
+				},
+				"isVisible": 1,
+				"logicalId": "find"
+			},
+			{
+				"name": "Rafraichir",
+				"type": "action",
+				"subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+				},
+				"configuration" : {
+					"request" : "refresh"
+				},
+				"isVisible": 1,
+				"logicalId": "refresh"
+			}
+
+		]
+	}
+}

@@ -60,7 +60,7 @@ def clean_result(device,result):
 		if 'get_status' in result and 'error_code' in result['get_status']:
 			if result['get_status']['error_code'] in globals.DICT_ERROR_WIFI[device]:
 				result['get_status']['error_code'] = globals.DICT_ERROR_WIFI[device][result['get_status']['error_code']]
-	if device == 'vacuum':
+	if device in ['vacuum','vacuum2']:
 		if 'get_status' in result and 'clean_area' in result['get_status']:
 			result['get_status']['clean_area'] = pretty_area(result['get_status']['clean_area'])
 		if 'get_status' in result and 'clean_time' in result['get_status']:

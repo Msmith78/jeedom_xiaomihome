@@ -27,7 +27,8 @@ class XiaomiConnector:
 	def _prepare_socket(self):
 		sock = socket.socket(socket.AF_INET,  # Internet
 							 socket.SOCK_DGRAM)  # UDP
-
+		
+		sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 		sock.bind(("0.0.0.0", self.MULTICAST_PORT))
 
 		mreq = struct.pack("=4sl", socket.inet_aton(self.MULTICAST_ADDRESS),

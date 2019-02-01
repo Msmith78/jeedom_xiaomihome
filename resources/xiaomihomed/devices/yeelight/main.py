@@ -1,19 +1,44 @@
 import colorsys
 import json
 import logging
+import os
 import socket
-
+import struct
 from enum import Enum
 
 from future.utils import raise_from
+
+from .decorator import decorator
+from .enums import PowerMode
+from .flow import Flow
+from .utils import _clamp
+
+if os.name == "nt":
+    import win32api as fcntl
+else:
+    import fcntl
+
 
 try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
 
-from .decorator import decorator
-from .flow import Flow
+_LOGGER = logging.getLogger(__name__)
+
+_MODEL_SPECS = {
+    "mono": {"color_temp": {"min": 2700, "max": 2700}},
+    "mono1": {"color_temp": {"min": 2700, "max": 2700}},
+    "color": {"color_temp": {"min": 1700, "max": 6500}},
+    "color1": {"color_temp": {"min": 1700, "max": 6500}},
+    "strip1": {"color_temp": {"min": 1700, "max": 6500}},
+    "bslamp1": {"color_temp": {"min": 1700, "max": 6500}},
+    "ceiling1": {"color_temp": {"min": 2700, "max": 6500}},
+    "ceiling2": {"color_temp": {"min": 2700, "max": 6500}},
+    "ceiling3": {"color_temp": {"min": 2700, "max": 6000}},
+    "ceiling4": {"color_temp": {"min": 2700, "max": 6500}},
+    "color2": {"color_temp": {"min": 2700, "max": 6500}},
+}
 
 
 @decorator
@@ -22,10 +47,10 @@ def _command(f, *args, **kw):
     self = args[0]
     effect = kw.get("effect", self.effect)
     duration = kw.get("duration", self.duration)
+    power_mode = kw.get("power_mode", self.power_mode)
 
     method, params = f(*args, **kw)
-    if method in ["set_ct_abx", "set_rgb", "set_hsv", "set_bright",
-                  "set_power", "toggle"]:
+    if method in ["set_ct_abx", "set_rgb", "set_hsv", "set_bright", "set_power", "toggle"]:
         if self._music_mode:
             # Mapping calls to their properties.
             # Used to keep music mode cache up to date.
@@ -34,7 +59,7 @@ def _command(f, *args, **kw):
                 "set_rgb": ["rgb"],
                 "set_hsv": ["hue", "sat"],
                 "set_bright": ["bright"],
-                "set_power": ["power"]
+                "set_power": ["power"],
             }
             # Handle toggling separately, as it depends on a previous power state.
             if method == "toggle":
@@ -42,17 +67,35 @@ def _command(f, *args, **kw):
             elif method in action_property_map:
                 set_prop = action_property_map[method]
                 update_props = {set_prop[prop]: params[prop] for prop in range(len(set_prop))}
-                logging.debug("Music mode cache update: %s", update_props)
+                _LOGGER.debug("Music mode cache update: %s", update_props)
                 self._last_properties.update(update_props)
         # Add the effect parameters.
         params += [effect, duration]
+        # Add power_mode parameter.
+        if method == "set_power" and params[0] == "on" and power_mode.value != PowerMode.LAST:
+            params += [power_mode.value]
 
     result = self.send_command(method, params).get("result", [])
     if result:
         return result[0]
 
 
-def discover_bulbs(timeout=2):
+def get_ip_address(ifname):
+    """
+    Returns the IPv4 address of the requested interface (thanks Martin Konecny, https://stackoverflow.com/a/24196955)
+
+    :param string interface: The interface to get the IPv4 address of.
+
+    :returns: The interface's IPv4 address.
+
+    """
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(
+        fcntl.ioctl(s.fileno(), 0x8915, struct.pack("256s", bytes(ifname[:15], "utf-8")))[20:24]
+    )  # SIOCGIFADDR
+
+
+def discover_bulbs(timeout=2, interface=False):
     """
     Discover all the bulbs in the local network.
 
@@ -60,17 +103,23 @@ def discover_bulbs(timeout=2):
                         always take exactly this long to run, as it can't know
                         when all the bulbs have finished responding.
 
+    :param string interface: The interface that should be used for multicast packets.
+                             Note: it *has* to have a valid IPv4 address. IPv6-only
+                             interfaces are not supported (at the moment).
+                             The default one will be used if this is not specified.
+
     :returns: A list of dictionaries, containing the ip, port and capabilities
               of each of the bulbs in the network.
     """
-    msg = 'M-SEARCH * HTTP/1.1\r\n' \
-          'ST:wifi_bulb\r\n' \
-          'MAN:"ssdp:discover"\r\n'
+    msg = "\r\n".join(["M-SEARCH * HTTP/1.1", "HOST: 239.255.255.250:1982", 'MAN: "ssdp:discover"', "ST: wifi_bulb"])
 
     # Set up UDP socket
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    s.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 32)
+    if interface:
+        s.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_IF, socket.inet_aton(get_ip_address(interface)))
     s.settimeout(timeout)
-    s.sendto(msg.encode(), ('239.255.255.250', 1982))
+    s.sendto(msg.encode(), ("239.255.255.250", 1982))
 
     bulbs = []
     bulb_ips = set()
@@ -101,6 +150,7 @@ class BulbException(Exception):
     This exception is raised when bulb informs about errors, e.g., when trying
     to issue unsupported commands to the bulb.
     """
+
     pass
 
 
@@ -108,17 +158,22 @@ class BulbType(Enum):
     """
     The bulb's type.
 
-    This is either `White` or `Color`, or `Unknown` if the properties have not
-    been fetched yet.
+    This is either `White` (for monochrome bulbs), `Color` (for color bulbs), `WhiteTemp` (for white bulbs with
+    configurable color temperature), `WhiteTempMood` for white bulbs with mood lighting (like the Galaxy LED ceiling
+    light), or `Unknown` if the properties have not been fetched yet.
     """
+
     Unknown = -1
     White = 0
     Color = 1
+    WhiteTemp = 2
+    WhiteTempMood = 2
 
 
 class Bulb(object):
-    def __init__(self, ip, port=55443, effect="smooth",
-                 duration=300, auto_on=False, type = ''):
+    def __init__(
+        self, ip, port=55443, effect="smooth", duration=300, auto_on=False, power_mode=PowerMode.LAST, model=None
+    ):
         """
         The main controller class of a physical YeeLight bulb.
 
@@ -137,6 +192,13 @@ class Bulb(object):
                              <yeelight.Bulb.get_properties()>` or run
                              :py:meth:`ensure_on() <yeelight.Bulb.ensure_on>`
                              yourself if you're worried about rate-limiting.
+        :param yeelight.enums.PowerMode power_mode:
+                             The mode for the light set when powering on.
+        :param str model:    The model name of the yeelight (e.g. "color",
+                             "mono", etc). The setting is used to enable model
+                             specific features (e.g. a particular color
+                             temperature range).
+
         """
         self._ip = ip
         self._port = port
@@ -144,12 +206,13 @@ class Bulb(object):
         self.effect = effect
         self.duration = duration
         self.auto_on = auto_on
+        self.power_mode = power_mode
+        self.model = model
 
-        self.__cmd_id = 0           # The last command id we used.
+        self.__cmd_id = 0  # The last command id we used.
         self._last_properties = {}  # The last set of properties we've seen.
-        self._music_mode = False    # Whether we're currently in music mode.
-        self.__socket = None        # The socket we use to communicate.
-        self.type = type        # The socket we use to communicate.
+        self._music_mode = False  # Whether we're currently in music mode.
+        self.__socket = None  # The socket we use to communicate.
 
     @property
     def _cmd_id(self):
@@ -172,7 +235,7 @@ class Bulb(object):
 
     def ensure_on(self):
         """Turn the bulb on if it is off."""
-        if self._music_mode is True or self.auto_on is False or self.type == 'desklamp':
+        if self._music_mode is True or self.auto_on is False:
             return
 
         self.get_properties()
@@ -197,17 +260,23 @@ class Bulb(object):
         The type of bulb we're communicating with.
 
         Returns a :py:class:`BulbType <yeelight.BulbType>` describing the bulb
-        type. This can either be `Color <yeelight.BulbType.Color>` or
-        `White <yeelight.BulbType.White>`.
+        type.
 
         When trying to access before properties are known, the bulb type is unknown.
 
         :rtype: yeelight.BulbType
         :return: The bulb's type.
         """
-        if not self._last_properties:
+        if not self._last_properties or any(name not in self.last_properties for name in ["ct", "rgb"]):
             return BulbType.Unknown
-        if not all(name in self.last_properties for name in ['ct', 'rgb', 'hue', 'sat']):
+        if self.last_properties["rgb"] is None and self.last_properties["ct"]:
+            if self.last_properties["bg_power"] is not None:
+                return BulbType.WhiteTempMood
+            else:
+                return BulbType.WhiteTemp
+        if all(
+            name in self.last_properties and self.last_properties[name] is None for name in ["ct", "rgb", "hue", "sat"]
+        ):
             return BulbType.White
         else:
             return BulbType.Color
@@ -222,11 +291,37 @@ class Bulb(object):
         """
         return self._music_mode
 
-    def get_properties(self):
+    def get_properties(
+        self,
+        requested_properties=[
+            "power",
+            "bright",
+            "ct",
+            "rgb",
+            "hue",
+            "sat",
+            "color_mode",
+            "flowing",
+            "delayoff",
+            "music_on",
+            "nl_br",
+            "active_mode",
+            "bg_power",
+            "bg_rgb",
+            "name",
+        ],
+    ):
         """
         Retrieve and return the properties of the bulb.
 
         This method also updates ``last_properties`` when it is called.
+
+        The ``current_brightness`` property is calculated by the library (i.e. not returned
+        by the bulb), and indicates the current brightness of the lamp, aware of night light
+        mode. It is 0 if the lamp is off, and None if it is unknown.
+
+        :param list requested_properties: The list of properties to request from the bulb.
+                                          By default, this does not include ``flow_params``.
 
         :returns: A dictionary of param: value items.
         :rtype: dict
@@ -236,16 +331,21 @@ class Bulb(object):
         if self._music_mode:
             return self._last_properties
 
-        requested_properties = [
-            "power", "bright", "ct", "rgb", "hue", "sat",
-            "color_mode", "flowing", "delayoff", "flow_params",
-            "music_on", "name"
-        ]
         response = self.send_command("get_prop", requested_properties)
         properties = response["result"]
         properties = [x if x else None for x in properties]
 
         self._last_properties = dict(zip(requested_properties, properties))
+
+        if self._last_properties.get("power") == "off":
+            cb = "0"
+        elif self._last_properties.get("active_mode") == "1":
+            # Nightlight mode.
+            cb = self._last_properties.get("nl_br")
+        else:
+            cb = self._last_properties.get("bright")
+        self._last_properties["current_brightness"] = cb
+
         return self._last_properties
 
     def send_command(self, method, params=None):
@@ -258,23 +358,20 @@ class Bulb(object):
         :raises BulbException: When the bulb indicates an error condition.
         :returns: The response from the bulb.
         """
-        command = {
-            "id": self._cmd_id,
-            "method": method,
-            "params": params,
-        }
+        command = {"id": self._cmd_id, "method": method, "params": params}
 
-        logging.debug("%s > %s", self, command)
+        _LOGGER.debug("%s > %s", self, command)
+
         try:
             self._socket.send((json.dumps(command) + "\r\n").encode("utf8"))
-            if self.type in ['desklamp']:
+            if self.model in ['desklamp','ceiling1']:
                 self._socket.send(("\r\n").encode("utf8"))
         except socket.error as ex:
             # Some error occurred, remove this socket in hopes that we can later
             # create a new one.
             self.__socket.close()
             self.__socket = None
-            raise_from(BulbException('A socket error occurred when sending the command.'), ex)
+            raise_from(BulbException("A socket error occurred when sending the command. id : " + str(self._ip) + " " + str(ex) ), ex)
 
         if self._music_mode:
             # We're in music mode, nothing else will happen.
@@ -286,11 +383,11 @@ class Bulb(object):
         while response is None:
             try:
                 data = self._socket.recv(16 * 1024)
-            except socket.error as e:
+            except socket.error:
                 # An error occured, let's close and abort...
                 self.__socket.close()
                 self.__socket = None
-                response = {"error": "Bulb closed the connection." + e}
+                response = {"error": "Bulb closed the connection."}
                 break
 
             for line in data.split(b"\r\n"):
@@ -299,7 +396,7 @@ class Bulb(object):
 
                 try:
                     line = json.loads(line.decode("utf8"))
-                    logging.debug("%s < %s", self, line)
+                    _LOGGER.debug("%s < %s", self, line)
                 except ValueError:
                     line = {"result": ["invalid command"]}
 
@@ -324,7 +421,7 @@ class Bulb(object):
         """
         self.ensure_on()
 
-        degrees = max(1700, min(6500, degrees))
+        degrees = _clamp(degrees, 1700, 6500)
         return "set_ct_abx", [degrees]
 
     @_command
@@ -338,13 +435,13 @@ class Bulb(object):
         """
         self.ensure_on()
 
-        red = max(0, min(255, red))
-        green = max(0, min(255, green))
-        blue = max(0, min(255, blue))
+        red = _clamp(red, 0, 255)
+        green = _clamp(green, 0, 255)
+        blue = _clamp(blue, 0, 255)
         return "set_rgb", [red * 65536 + green * 256 + blue]
 
     @_command
-    def set_adjust(self, action, prop):
+    def set_adjust(self, action, prop, **kwargs):
         """
         Adjust a parameter.
 
@@ -375,23 +472,23 @@ class Bulb(object):
         self.ensure_on()
 
         # We fake this using flow so we can add the `value` parameter.
-        hue = max(0, min(359, hue))
-        saturation = max(0, min(100, saturation))
+        hue = _clamp(hue, 0, 359)
+        saturation = _clamp(saturation, 0, 100)
 
         if value is None:
             # If no value was passed, use ``set_hsv`` to preserve luminance.
             return "set_hsv", [hue, saturation]
         else:
             # Otherwise, use flow.
-            value = max(0, min(100, value))
+            value = _clamp(value, 0, 100)
 
             if kwargs.get("effect", self.effect) == "sudden":
                 duration = 50
             else:
                 duration = kwargs.get("duration", self.duration)
 
-            hue = max(0, min(359, hue)) / 359.0
-            saturation = max(0, min(100, saturation)) / 100.0
+            hue = _clamp(hue, 0, 359) / 359.0
+            saturation = _clamp(saturation, 0, 100) / 100.0
             red, green, blue = [int(round(col * 255)) for col in colorsys.hsv_to_rgb(hue, saturation, 1)]
             rgb = red * 65536 + green * 256 + blue
             return "start_cf", [1, 1, "%s, 1, %s, %s" % (duration, rgb, value)]
@@ -405,19 +502,8 @@ class Bulb(object):
         """
         self.ensure_on()
 
-        brightness = int(max(1, min(100, brightness)))
+        brightness = _clamp(brightness, 1, 100)
         return "set_bright", [brightness]
-    
-    @_command
-    def set_color_temp_desk(self, degrees, brightness, **kwargs):
-        """
-        Set the scene HACK for color temperature on desk lamp.
-
-        """
-        self.ensure_on()
-        brightness = int(max(1, min(100, brightness)))
-        degrees = max(2700, min(6500, degrees))
-        return "set_scene", ["ct",degrees,brightness]
 
     @_command
     def turn_on(self, **kwargs):
@@ -430,7 +516,7 @@ class Bulb(object):
         return "set_power", ["off"]
 
     @_command
-    def toggle(self):
+    def toggle(self, **kwargs):
         """Toggle the bulb on or off."""
         return "toggle", []
 
@@ -460,7 +546,7 @@ class Bulb(object):
 
         self.ensure_on()
 
-        return "start_cf", [flow.count * len(flow.transitions), flow.action.value, flow.expression]
+        return ("start_cf", [flow.count * len(flow.transitions), flow.action.value, flow.expression])
 
     @_command
     def stop_flow(self):
@@ -557,5 +643,31 @@ class Bulb(object):
         return "cron_del", [event_type.value]
 
     def __repr__(self):
-        return "Bulb<{ip}:{port}, type={type}>".format(
-            ip=self._ip, port=self._port, type=self.bulb_type)
+        return "Bulb<{ip}:{port}, type={type}>".format(ip=self._ip, port=self._port, type=self.bulb_type)
+
+    def set_power_mode(self, mode):
+        """
+        Set the light power mode.
+
+        If the light is off it will be turned on.
+
+        :param yeelight.enums.PowerMode mode: The mode to swith to.
+        """
+        return self.turn_on(power_mode=mode)
+
+    def get_model_specs(self, **kwargs):
+        """
+        Return the specifications (e.g. color temperature min/max) of the bulb.
+        """
+        if self.model is not None and self.model in _MODEL_SPECS:
+            return _MODEL_SPECS[self.model]
+
+        _LOGGER.debug("Model unknown (%s). Providing a fallback", self.model)
+        if self.bulb_type is BulbType.White:
+            return _MODEL_SPECS["mono"]
+
+        if self.bulb_type is BulbType.WhiteTemp:
+            return _MODEL_SPECS["ceiling1"]
+
+        # BulbType.Color and BulbType.Unknown
+        return _MODEL_SPECS["color"]

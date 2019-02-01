@@ -29,8 +29,10 @@ try {
 		if (!is_object($eqLogic)) {
 			throw new Exception(__('XiaomiHome eqLogic non trouvé : ', __FILE__) . init('id'));
 		}
-		foreach ($eqLogic->getCmd() as $cmd) {
-			$cmd->remove();
+		if (init('createcommand') == 1){
+			foreach ($eqLogic->getCmd() as $cmd) {
+				$cmd->remove();
+			}
 		}
 		$eqLogic->applyModuleConfiguration($eqLogic->getConfiguration('model'));
 		ajax::success();
@@ -39,6 +41,24 @@ try {
 	if (init('action') == 'discover') {
 		xiaomihome::discover(init('mode'));
 		ajax::success();
+	}
+	
+	if (init('action') == 'InclusionGateway') {
+		$eqLogic = xiaomihome::byId(init('id'));
+		ajax::success($eqLogic->inclusion_mode());
+	}
+	
+	if (init('action') == 'ExclusionGateway') {
+		$eqLogics = eqLogic::byType('xiaomihome');
+		foreach ($eqLogics as $eqLogicGateway) {
+			if ($eqLogicGateway->getConfiguration('type') == 'aquara' && $eqLogicGateway->getConfiguration('model') == 'gateway') {
+				if ($eqLogicGateway->getConfiguration('gateway') == init('gateway')){
+					$eqLogic = $eqLogicGateway;
+					break;
+				}
+			}
+		 }
+		ajax::success($eqLogic->exclusion_mode(init('id')));
 	}
 
 	if (init('action') == 'sync') {

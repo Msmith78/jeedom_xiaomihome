@@ -1,43 +1,48 @@
 # Changelog
 
-Important : en cas de mise à jour disponible pour laquelle il n'y a pas d'information dans cette section, c'est qu'elle n'intègre aucune nouveauté majeure. Cela peut être un ajout de documentation, une correction de documentation, des traductions ou bien de la correction de bugs mineurs.
+Important : in case you don't see an entry on this page and an update is avalaible on the market, this is some translations or minor fixes
 
+## Version 15 january 2018
 
-## Version du 27 décembre 2017
+Fix bug on status of Philips bulb
 
-Correction d'un bug sur création équipements
+Add new Air Purifier v2 with display
 
-Ajout du Purificateur Pro
+Add Yeelight Ceiling 450, 480, 650
 
-## Version du 14 décembre 2017
+## Version 27 december 2017
+
+Fix bug on creating new stuff
+
+Add Air Purifier Pro
+
+## Version 14 december 2017
 
 Refonte de la page équipement qui empêche la création manuelle des équipements Aqara
 
-## Version du 14 décembre 2017
-
 Ajout de la commande Rafraichir sur les équipements aqara (zigbee) qui permet de demander l'état actuel des capteurs
 
-## Version du 21 novembre 2017
+## Version 21 nomvember 2017
 
-Ajout de l'ampoule Philips
+Add Philips bulb
 
-Ajout de la lampe de chevet Yeelight Wifi
+Add Yeelight Wifi Bedlamp
 
-## Version du 15 novembre 2017
+## Version 15 november 2017
 
-Modification de la documentation
+Modification of documentation format
 
-## Version du 07 octobre 2017
+## Version 07 october 2017
 
-Design page des équipements
+Design equipement page
 
 Ajout visibilité des équipements BLEA Xiaomi depuis la page équipement
 
-## Version du 30 septembre 2017
+## Version 30 september 2017
 
 Ajout de la prise murale Zigbee
 
-## Version du 25 septembre 2017
+## Version 25 september 2017
 
 Ajout de matériels :
 
@@ -58,10 +63,10 @@ Ajout d'informations sur un équipement Wifi :
 
 * puissance et temps sur la multiprise
 
-## Version du 20 avril 2017
+## Version 20 april 2017
 
-Refonte du démon en python
+Rewrite python daemon
 
-Utilisation du démon pour le statut et commandes Yeelight
+Use the daemon for commands and status on Yeelight
 
-Ajout de nouveaux périphériques Wifi Xiaomi
+Add new Wifi Xiaomi devices

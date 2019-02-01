@@ -1,0 +1,78 @@
+{
+    "sensor_switch.aq3": {
+        "name": "Bouton clic 2",
+		"groupe" : "Aquara",
+		"configuration" : {
+			"model" : "sensor_switch.aq3",
+            "type" : "aquara",
+			"battery_type" : "1x3V CR2032"
+		},
+        "commands": [
+			{
+                "name": "Clic",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "configuration" : {
+                    "repeatEventManagement" : "always"
+        		},
+                "logicalId": "status",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Pile Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "switch" : "read"
+                },
+                "isVisible": 0,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

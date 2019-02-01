@@ -1,0 +1,345 @@
+{
+	"purifier2": {
+		"name": "Purificateur d'air avec affichage",
+		"groupe" : "Wifi",
+		"configuration" : {
+			"model" : "purifier2",
+			"type" : "wifi"
+		},
+        "commands": [
+            {
+                "name": "Online",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "online",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Etat",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::power",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Mode",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::mode",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Qualité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "ug/m3",
+                "logicalId": "status::aqi",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Humidité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "%",
+                "logicalId": "status::humidity",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Température",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "°",
+                "logicalId": "status::temp_dec",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Luminosité",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-sun-o\"><\/i>",
+                    "generic_type": "BRIGHTNESS"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::bright",
+                "template": {
+                    "dashboard": "line",
+                    "mobile": "line"
+                }
+            },
+			{
+                "name": "Filtre",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "%",
+                "logicalId": "status::filter1_life",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Niveau Favori",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::favorite_level",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Moteur",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+				"unite" : "rpm",
+                "logicalId": "status::motor1_speed",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Statut buzzer",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "logicalId": "status::buzzer"
+            },
+			{
+                "name": "Statut led",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "logicalId": "status::led"
+            },
+			{
+                "name": "Statut Child Lock",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "logicalId": "status::child_lock"
+            },
+			{
+                "name": "Child Lock On",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "set_child_lock",
+					"params" : "[\"on\"]"
+        		},
+                "isVisible": 0,
+                "logicalId": "childon"
+            },
+			{
+                "name": "Child Lock Off",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "set_child_lock",
+					"params" : "[\"off\"]"
+        		},
+                "isVisible": 0,
+                "logicalId": "childoff"
+            },
+            {
+                "name": "Démarrer",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-play\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_power",
+					"params" : "[\"on\"]"
+        		},
+                "isVisible": 1,
+                "logicalId": "on"
+            },
+            {
+                "name": "Arrêter",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-stop\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_power",
+					"params" : "[\"off\"]"
+        		},
+                "isVisible": 1,
+                "logicalId": "off"
+            },
+            {
+                "name": "Auto",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"icon divers-triangular42\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_mode",
+					"params" : "[\"auto\"]"
+        		},
+                "isVisible": 1,
+                "logicalId": "auto"
+            },
+			{
+                "name": "Silence",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"icon personne-sleeping4\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_mode",
+					"params" : "[\"silent\"]"
+        		},
+                "isVisible": 1,
+                "logicalId": "silent"
+            },
+            {
+                "name": "Favoris",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-user\"><\/i>"
+                },
+                "configuration" : {
+        			"request" : "set_mode",
+					"params" : "[\"favorite\"]"
+        		},
+                "isVisible": 1,
+                "logicalId": "favorite"
+            },
+			{
+                "name": "Définir Niveau Favori",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+                    "generic_type": "LIGHT_SLIDER",
+                    "forceReturnLineBefore": 1
+                },
+                "configuration" : {
+                    "switch" : "vol",
+                    "request" : "set_level_favorite",
+										"params" : "[#slider#]",
+                    "minValue" : 0,
+                    "maxValue" : 14
+                },
+                "value": "Niveau Favori",
+                "isVisible": 1,
+                "logicalId": "level-set"
+            },
+			{
+                "name": "Buzzer On",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "set_buzzer",
+					"params" : "[\"on\"]"
+        		},
+                "isVisible": 0,
+                "logicalId": "buzzon"
+            },
+			{
+                "name": "Buzzer Off",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "set_buzzer",
+					"params" : "[\"off\"]"
+        		},
+                "isVisible": 0,
+                "logicalId": "buzzoff"
+            },
+			{
+                "name": "Diode",
+                "type": "action",
+                "subtype": "slider",
+                "configuration" : {
+        			"request" : "set_led_b",
+                    "minValue" : 0,
+                    "maxValue" : 2,
+					"params" : "[#slider#]"
+        		},
+                "isVisible": 0,
+                "logicalId": "ledb"
+            },
+			 {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+				"display": {
+					"icon": "<i class=\"fa fa-refresh\"><\/i>"
+                },
+                "isVisible": 1,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

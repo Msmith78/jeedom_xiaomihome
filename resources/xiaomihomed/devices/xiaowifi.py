@@ -111,7 +111,7 @@ def refresh(message):
 							i = i+1
 							result['status'] = status
 					else:
-						if device == 'vacuum':
+						if device in ['vacuum','vacuum2']:
 							real_result= Packet.getPlainData().split('{',2)[2].split('}',1)[0]
 							logging.debug(json.loads('{'+real_result+'}'))
 							result[dict_params['method']] =json.loads('{'+real_result+'}')

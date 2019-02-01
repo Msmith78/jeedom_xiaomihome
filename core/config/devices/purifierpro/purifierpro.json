@@ -133,6 +133,21 @@
 				}
             },
 			{
+                "name": "Niveau Favori",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "status::favorite_level",
+                "template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
                 "name": "Moteur",
                 "type": "info",
                 "subtype": "numeric",
@@ -161,6 +176,35 @@
                 "subtype": "string",
                 "isVisible": 0,
                 "logicalId": "status::led"
+            },
+			{
+                "name": "Statut Child Lock",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 0,
+                "logicalId": "status::child_lock"
+            },
+			{
+                "name": "Child Lock On",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "set_child_lock",
+					"params" : "[\"on\"]"
+        		},
+                "isVisible": 0,
+                "logicalId": "childon"
+            },
+			{
+                "name": "Child Lock Off",
+                "type": "action",
+                "subtype": "other",
+                "configuration" : {
+        			"request" : "set_child_lock",
+					"params" : "[\"off\"]"
+        		},
+                "isVisible": 0,
+                "logicalId": "childoff"
             },
             {
                 "name": "Démarrer",
@@ -231,6 +275,25 @@
         		},
                 "isVisible": 1,
                 "logicalId": "favorite"
+            },
+			{
+                "name": "Définir Niveau Favori",
+                "type": "action",
+                "subtype": "slider",
+                "display": {
+                    "generic_type": "LIGHT_SLIDER",
+                    "forceReturnLineBefore": 1
+                },
+                "configuration" : {
+                    "switch" : "vol",
+                    "request" : "set_level_favorite",
+										"params" : "[#slider#]",
+                    "minValue" : 0,
+                    "maxValue" : 17
+                },
+                "value": "Niveau Favori",
+                "isVisible": 1,
+                "logicalId": "level-set"
             },
 			{
                 "name": "Buzzer On",

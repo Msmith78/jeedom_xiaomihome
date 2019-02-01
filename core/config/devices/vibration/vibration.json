@@ -1,0 +1,110 @@
+{
+    "vibration": {
+        "name": "Capteur Vibration",
+		"groupe" : "Aquara",
+		"configuration" : {
+			"model" : "vibration",
+            "type" : "aquara",
+			"battery_type" : "1x3V CR2032"
+		},
+        "commands": [
+			{
+                "name": "Mouvement",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "configuration" : {
+                    "repeatEventManagement" : "always"
+        		},
+                "logicalId": "status",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Angle final",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°",
+                "logicalId": "final_tilt_angle",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Coordonnées",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "ms",
+                "logicalId": "coordination",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Pile Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "switch" : "read"
+                },
+                "isVisible": 0,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

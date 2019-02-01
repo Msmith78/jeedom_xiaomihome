@@ -50,7 +50,7 @@ class jeedom_com():
 		try:
 			if len(self.changes) == 0:
 				resend_changes = threading.Timer(self.cycle, self.send_changes_async)
-				resend_changes.start() 
+				resend_changes.start()
 				return
 			start_time = datetime.datetime.now()
 			changes = self.changes
@@ -59,7 +59,7 @@ class jeedom_com():
 			i=0
 			while i < self.retry:
 				try:
-					r = requests.post(self.url + '?apikey=' + self.apikey, json=changes, timeout=(0.5, 120), verify=False)
+					r = requests.post(self.url + '?apikey=' + self.apikey, json=changes, timeout=(0.5, 120), verify=True)
 					if r.status_code == requests.codes.ok:
 						break
 				except Exception as error:
@@ -73,12 +73,12 @@ class jeedom_com():
 			if timer_duration < 0.1:
 				timer_duration = 0.1
 			resend_changes = threading.Timer(timer_duration, self.send_changes_async)
-			resend_changes.start() 
+			resend_changes.start()
 		except Exception as error:
 			logging.error('Critical error on  send_changes_async %s' % (str(error),))
 			resend_changes = threading.Timer(self.cycle, self.send_changes_async)
-			resend_changes.start() 
-		
+			resend_changes.start()
+
 	def add_changes(self,key,value):
 		if key.find('::') != -1:
 			tmp_changes = {}
@@ -107,13 +107,13 @@ class jeedom_com():
 		i=0
 		while i < self.retry:
 			try:
-				r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5, 120), verify=False)
+				r = requests.post(self.url + '?apikey=' + self.apikey, json=change, timeout=(0.5, 120), verify=True)
 				if r.status_code == requests.codes.ok:
 					break
 			except Exception as error:
 				logging.error('Error on send request to jeedom ' + str(error)+' retry : '+str(i)+'/'+str(self.retry))
 			i = i + 1
-		
+
 	def set_change(self,changes):
 		self.changes = changes
 
@@ -123,7 +123,7 @@ class jeedom_com():
 	def merge_dict(self,d1, d2):
 	    for k,v2 in d2.items():
 	        v1 = d1.get(k) # returns None if v1 has no value for this key
-	        if ( isinstance(v1, collections.Mapping) and 
+	        if ( isinstance(v1, collections.Mapping) and
 	             isinstance(v2, collections.Mapping) ):
 	            self.merge_dict(v1, v2)
 	        else:
@@ -131,7 +131,7 @@ class jeedom_com():
 
 	def test(self):
 		try:
-			response = requests.get(self.url + '?apikey=' + self.apikey, verify=False)
+			response = requests.get(self.url + '?apikey=' + self.apikey, verify=True)
 			if response.status_code != requests.codes.ok:
 				logging.error('Callback error: %s %s. Please check your network configuration page'% (response.status.code, response.status.message,))
 				return False
@@ -213,7 +213,7 @@ class jeedom_utils():
 		pid = str(os.getpid())
 		logging.debug("Writing PID " + pid + " to " + str(path))
 		file(path, 'w').write("%s\n" % pid)
-		
+
 	@staticmethod
 	def remove_accents(input_str):
 		nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
@@ -237,7 +237,7 @@ class jeedom_serial():
 			logging.error("Device name missing.")
 			return False
 		logging.debug("Open Serialport")
-		try:  
+		try:
 			self.port = serial.Serial(self.device,self.rate,timeout=self.timeout)
 		except serial.SerialException, e:
 			logging.error("Error: Failed to connect on device " + self.device + " Details : " + str(e))

@@ -47,7 +47,7 @@
     "plugins\/xiaomihome\/desktop\/php\/xiaomihome.php": {
         "Ajouter un équipement": "Gerät hinzufügen",
         "Rechercher": "Suchen",
-        "Gestion": "Management",
+        "Gestion": "Verwaltung",
         "Mode inclusion": "Inklusions Modus",
         "Configuration": "Konfiguration",
         "Santé": "Gesundheit",
@@ -78,7 +78,7 @@
         "Unité": "Einheit",
         "Paramètres": "Parameter",
         "Ajouter une commande info": "Info Befehl hinzufügen",
-        "Ajouter une commande action": "Ajouter une commande action",
+        "Ajouter une commande action": "Aktion Befehl hinzufügen",
         "Gateway": "Gateway",
         "Identifiant court": "Kurze Bezeichnung",
         "Password": "Password",

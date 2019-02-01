@@ -1,12 +1,15 @@
 {
 	"id" : "xiaomihome",
 	"name" : "Xiaomi Home",
+	"description" : "Plugin qui vous permet d'utiliser différents matériels Xiaomi Wifi : la gamme Aqara Zigbee avec la gateway, les luminaires Yeelight, ou encore les appliances comme le robot aspirateur. Aujourd'hui vous pouvez récupérer ainsi utiliser vos capteurs Xiaomi : mouvement, temp/humidité, ouverture, bouton, cube, interrupteurs muraux ou encastrables, prises murales ou encastrées, moteurs rideaux, fumée, gaz, eau et la gateway en elle-même (lumière, anneau LED et sons). Permet aussi d'utiliser les Yeelight que ce soit les ampoules blanches, RGB ou le bandeau LED ou le plafonnier. Et les appliances : robot aspirateur, multiprise, purificateur, humidificateur, capteur pollution ...",
 	"licence" : "AGPL",
 	"author" : "lunarok,sarakha63",
 	"require" : "3.0",
 	"category" : "automation protocol",
     "hasDependency" : 1,
     "hasOwnDeamon" : 1,
-    "changelog" : "https://lunarok.github.com/jeedom_xiaomihome/changelog.html",
-    "documentation" : "https://lunarok.github.com/jeedom_xiaomihome/"
+	"language" : ["fr_FR","en_US"],
+	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"],
+		"changelog" : "https://lunarok.github.io/jeedom_docs/plugins/xiaomihome/changelog.html",
+		"documentation" : "https://lunarok.github.io/jeedom_docs/plugins/xiaomihome/"
 }

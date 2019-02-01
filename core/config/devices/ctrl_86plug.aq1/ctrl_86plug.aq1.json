@@ -1,0 +1,144 @@
+{
+    "ctrl_86plug.aq1": {
+        "name": "Prise encastrée",
+		"groupe" : "Aquara",
+		"configuration" : {
+			"model" : "ctrl_86plug.aq1",
+            "type" : "aquara"
+		},
+        "commands": [
+			{
+                "name": "Status",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "ENERGY_STATE"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "status",
+				"template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            },
+            {
+                "name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "ENERGY_OFF"
+                },
+                "configuration" : {
+        			"switch" : "status",
+                    "request" : "off"
+        		},
+                "value": "Status",
+                "isVisible": 1,
+                "logicalId": "status-off",
+				"template": {
+					"dashboard": "prise",
+					"mobile": "prise"
+				}
+            },
+            {
+                "name": "On",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "ENERGY_ON"
+                },
+                "configuration" : {
+        			"switch" : "status",
+                    "request" : "on"
+        		},
+                "value": "Status",
+                "isVisible": 1,
+                "logicalId": "status-on",
+				"template": {
+					"dashboard": "prise",
+					"mobile": "prise"
+				}
+            },
+            {
+                "name": "Utilisation",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "logicalId": "inuse",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-plug\"><\/i>",
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Charge puissance",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-plug\"><\/i>",
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "W",
+                "logicalId": "load_power",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Puissance consommée",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+                    "icon": "<i class=\"fa fa-plug\"><\/i>",
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "kWh",
+                "logicalId": "power_consumed",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "switch" : "read"
+                },
+                "isVisible": 0,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

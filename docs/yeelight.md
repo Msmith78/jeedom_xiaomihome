@@ -17,11 +17,13 @@ Les lampes compatibles proposent les commandes suivantes par défaut : **Allumer
 Certaines lampes ajoutent des commandes :
 
 * **Yeelight Blanc** : pas d'autres commandes.
-* **Desklamp** : couleur de blanc.
+* **Desklamp** : température de blanc.
 * **Yeelight RGB** : Online, Statut, Définir couleur RGB, Lumière de lune, Lumière de Soleil, Extinction programmée, Stop Enchainement, Information de luminosité, Température de blanc, Information de température de blanc, Mode, Définir couleur HSV, Couleur HSV, Définir saturation HSV, Saturation HSV, Couleur RGB, Rafraichir.
 * **Bandeau RGB** : Online, Rafraichir, Statut, Définir couleur RGB, Lumière de lune, Lumière de Soleil, Extinction programmée, Température de blanc, Stop Enchainement, Information de luminosité, Mode, Définir couleur HSV, Couleur HSV, Définir saturation HSV, Saturation HSV, Couleur RGB.
-* **Lampe de Chevet** (socle doré) : couleur RGB, couleur de blanc, mode jour, mode nuit, couleurs HSV.
-* **Yeelight Ceiling** : couleur blanc, mode jour, mode nuit.
+* **Lampe de Chevet** (socle doré) : couleur RGB, température de blanc, mode jour, mode nuit, couleurs HSV.
+* **Yeelight Ceiling** : température de blanc, mode jour, mode nuit.
+* **Yeelight Ceiling 450 et 480** : température de blanc, mode jour, mode nuit.
+* **Yeelight Ceiling 650** : température de blanc, mode jour, mode nuit, couleurs RGB.
 
 ### La commande enchainement
 

@@ -1,0 +1,110 @@
+{
+    "sensor_cube.aqgl01": {
+        "name": "Cube Magique Aqgl01",
+		"groupe" : "Aquara",
+		"configuration" : {
+			"model" : "sensor_cube.aqgl01",
+            "type" : "aquara",
+			"battery_type" : "1x3V CR2450"
+		},
+        "commands": [
+			{
+                "name": "Mouvement",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "configuration" : {
+                    "repeatEventManagement" : "always"
+        		},
+                "logicalId": "status",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Rotation",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "unite": "°",
+                "logicalId": "rotate",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Temps Rotation",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "ms",
+                "logicalId": "rotatetime",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Pile Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "switch" : "read"
+                },
+                "isVisible": 0,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

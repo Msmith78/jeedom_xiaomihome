@@ -24,9 +24,17 @@ Pour cela, il faut :
 
 ### Création des équipements dans Jeedom
 
-Une fois que votre **passerelle Xiaomi** est ajoutée dans Jeedom, les équipements Aqara seront créés automatiquement. Si cela vous semble long, deux choses à savoir :
+La **passerelle Xiaomi** va remonter de manière automatique dans Jeedom, les équipements Aqara seront créés automatiquement. Si cela vous semble long, deux choses à savoir :
 * Pour les **capteurs** Aqara, c'est la remontée d'information qui déclenche la création de l'équipement dans Jeedom. La fréquence varie donc en fonction du modèle et de ses caractéristiques. (par exemple : soufflez sur un capteur de température permettra de changer la valeur de la température et remontera donc l'information)
 * Pour les **interrupteurs** et les **boutons** Aqara, il peut être nécessaire de les activer pour avoir la création des commandes. (par exemple : appuyez sur un des boutons)
+
+### Inclusion/Exclusion des capteurs depuis Jeedom
+
+Il est possible de gérer depuis Jeedom les ajouts ou suppression de capteurs de vos gateways.
+
+**Inclusion** : pour chaque gateway, un bouton inclusion est disponible sur la page équipement du plugin. En cliquant dessus, la gateway se met en mode inclusion et attend qu'un capteur se présente. Il faudra suivre les manipulations nécessaires pour le capteur à inclure. Le module sera alors ajouter (et visible dans Jeedom mais aussi Mi Home)
+
+**Exclusion** : pour exclure un capteur, ca se passe sur la page santé du plugin. Un bouton est disponible pour chaque capteur. A noter que l'exclusion ne supprime pas l'équipement dans Jeedom pour des raisons de sécurité. Il faudra le supprimer ensuite.
 
 ### Commandes des équipements compatibles
 

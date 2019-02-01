@@ -22,6 +22,8 @@ Certaines lampes ajoutent des commandes :
 * **Bandeau RGB** : Online, Rafraichir, Statut, Définir couleur RGB, Lumière de lune, Lumière de Soleil, Extinction programmée, Température de blanc, Stop Enchainement, Information de luminosité, Mode, Définir couleur HSV, Couleur HSV, Définir saturation HSV, Saturation HSV, Couleur RGB.
 * **Lampe de Chevet** (socle doré) : couleur RGB, couleur de blanc, mode jour, mode nuit, couleurs HSV.
 * **Yeelight Ceiling** : couleur blanc, mode jour, mode nuit.
+* **Yeelight Ceiling 450 et 480** : couleur blanc, mode jour, mode nuit.
+* **Yeelight Ceiling 650** : couleur blanc, mode jour, mode nuit, couleurs RGB.
 
 ### La commande enchainement
 

@@ -85,6 +85,12 @@ if (class_exists('blea')){
       if ($eqLogicGateway->getConfiguration('type') == 'aquara' && $eqLogicGateway->getConfiguration('model') == 'gateway') {
         echo '<legend>' . $eqLogicGateway->getHumanName(true) . '</legend>';
         echo '<div class="eqLogicThumbnailContainer">';
+        echo '<div class="cursor eqLogicAction inclusion" data-id="' . $eqLogicGateway->getId() . '" style="background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >';
+        echo '<center>';
+        echo '<i class="fa fa-sign-in" style="font-size : 7.5em;color:#00979c;"></i>';
+        echo '</center>';
+        echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#00979c"><center>Inclure </br> un module</center></span>';
+        echo '</div>';
         $status = 1;
         $opacity = ($eqLogicGateway->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
         echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogicGateway->getId() . '" style="background-color : #ffffff ; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
@@ -99,7 +105,7 @@ if (class_exists('blea')){
         }
         echo "<center>";
         if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogicGateway->getConfiguration('model') . '/' . $eqLogicGateway->getConfiguration('model') . '.png')) {
-          echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogicGateway->getConfiguration('model') . '/' . $eqLogicGateway->getConfiguration('model') . '.png' . '" height="105" width="95" />';
+          echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogicGateway->getConfiguration('model') . '/' . $eqLogicGateway->getConfiguration('model') . '.png' . '" height="105" width="105" />';
         } else {
           echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
         }
@@ -115,7 +121,7 @@ if (class_exists('blea')){
             }
             echo "<center>";
             if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png')) {
-              echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';
+              echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="105" />';
             } else {
               echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
             }
@@ -154,7 +160,7 @@ if (class_exists('blea')){
         if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png')) {
           echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';
         } else {
-          echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="95" />';
+          echo '<img src="' . $plugin->getPathImgIcon() . '" height="105" width="105" />';
         }
         echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
         echo '</div>';
@@ -186,7 +192,7 @@ if (class_exists('blea')){
           echo '<i class="fa fa-times" style="float:right" title="Offline"></i>';
         }
         echo "<center>";
-        echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="95" />';                echo "</center>";
+        echo '<img src="plugins/xiaomihome/core/config/devices/' . $eqLogic->getConfiguration('model') . '/' . $eqLogic->getConfiguration('model') . '.png' . '" height="105" width="105" />';                echo "</center>";
         echo '<span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;"><center>' . $eqLogic->getHumanName(true, true) . '</center></span>';
         echo '</div>';
       }
@@ -212,7 +218,7 @@ if (class_exists('blea')){
         if (file_exists(dirname(__FILE__) . '/../../../blea/core/config/devices/' . $alternateImg . '.jpg')) {
           echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $alternateImg . '.jpg" height="105" width="95" />';
         } elseif (file_exists(dirname(__FILE__) . '/../../../blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg')) {
-          echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg" height="105" width="95" />';
+          echo '<img class="lazy" src="plugins/blea/core/config/devices/' . $eqLogic->getConfiguration('device') . '.jpg" height="105" width="105" />';
         } else {
           echo '<img src="plugins/blea/core/plugin_info/blea.png" height="105" width="95" />';
         }
@@ -248,14 +254,14 @@ if (class_exists('blea')){
             <fieldset>
               <div class="form-group">
                 <label class="col-sm-3 control-label">{{Nom de l'équipement}}</label>
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                   <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                   <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement xiaomihome}}"/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label" >{{Objet parent}}</label>
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                   <select class="form-control eqLogicAttr" data-l1key="object_id">
                     <option value="">{{Aucun}}</option>
                     <?php

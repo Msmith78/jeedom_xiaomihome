@@ -27,7 +27,6 @@
                 "name": "Qualité",
                 "type": "info",
                 "subtype": "numeric",
-				"unite" : "ug/m3",
                 "display": {
 					"generic_type": "DONT"
                 },

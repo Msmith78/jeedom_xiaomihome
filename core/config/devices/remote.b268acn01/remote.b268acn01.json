@@ -1,0 +1,114 @@
+{
+    "remote.b268acn01": {
+        "name": "Interrupteur double à pile",
+        "groupe" : "Aquara",
+		"configuration" : {
+			"model" : "remote.b268acn01",
+            "type" : "aquara",
+            "battery_type" : "1x3V CR2032"
+		},
+        "commands": [
+			{
+                "name": "Status",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "configuration" : {
+                    "repeatEventManagement" : "always"
+        		},
+                "logicalId": "channel_0",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Status 2",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "configuration" : {
+                    "repeatEventManagement" : "always"
+        		},
+                "logicalId": "channel_1",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Double clic",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "GENERIC"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "configuration" : {
+                    "repeatEventManagement" : "always"
+        		},
+                "logicalId": "dual_channel",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Batterie",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "%",
+                "logicalId": "battery",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+			{
+                "name": "Pile Voltage",
+                "type": "info",
+                "subtype": "numeric",
+                "display": {
+					"icon": "<i class=\"fa fa-battery-full\"><\/i>",
+					"generic_type": "DONT"
+				},
+                "isVisible": 0,
+                "isHistorized": 0,
+                "unite": "V",
+                "logicalId": "voltage",
+				"template": {
+					"dashboard": "line",
+					"mobile": "line"
+				}
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "switch" : "read"
+                },
+                "isVisible": 0,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

@@ -23,7 +23,7 @@ def scan(timeout=2):
 
 def execute_action(message):
 	logging.debug(str(message))
-	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True,type=message['model'])
+	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True,model=message['model'])
 	command_list= message['command'].split(' ')
 	if command_list[0] == 'turn':
 		if command_list[1] == 'on':
@@ -89,7 +89,7 @@ def refresh(message):
 	data={}
 	result['ip']=message['dest']
 	data['id'] = message['id']
-	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True, type=message['model'])
+	bulb = Bulb(message['dest'], 55443, 'smooth', 500, True,model=message['model'])
 	result_brut = bulb.get_properties().items()
 	for key, value in result_brut:
 		data[key] = value

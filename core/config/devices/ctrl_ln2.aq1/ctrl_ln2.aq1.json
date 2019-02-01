@@ -1,0 +1,115 @@
+{
+    "ctrl_ln2.aq1": {
+        "name": "Interrupteur double encastré avec neutre",
+        "groupe" : "Aquara",
+		"configuration" : {
+			"model" : "ctrl_ln2.aq1",
+            "type" : "aquara"
+		},
+        "commands": [
+			{
+                "name": "Status",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "LIGHT_STATE"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "channel_0",
+				"template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            },
+            {
+                "name": "Off",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "LIGHT_OFF"
+                },
+                "configuration" : {
+        			"switch" : "channel_0",
+                    "request" : "off"
+        		},
+		    "value": "Status",
+                "isVisible": 1,
+                "logicalId": "channel_0-off"
+            },
+            {
+                "name": "On",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "LIGHT_ON"
+                },
+                "configuration" : {
+        			"switch" : "channel_0",
+                    "request" : "on"
+        		},
+		    "value": "Status",
+                "isVisible": 1,
+                "logicalId": "channel_0-on"
+            },
+            {
+                "name": "Status 2",
+                "type": "info",
+                "subtype": "binary",
+                "display": {
+					"generic_type": "LIGHT_STATE"
+                },
+                "isVisible": 1,
+                "isHistorized": 0,
+                "logicalId": "channel_1",
+				"template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+            },
+            {
+                "name": "Off 2",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "LIGHT_OFF"
+                },
+                "configuration" : {
+        			"switch" : "channel_1",
+                    "request" : "off"
+        		},
+		    "value": "Status 2",
+                "isVisible": 1,
+                "logicalId": "channel_1-off"
+            },
+            {
+                "name": "On 2",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"generic_type": "LIGHT_ON"
+                },
+                "configuration" : {
+        			"switch" : "channel_1",
+                    "request" : "on"
+        		},
+		    "value": "Status 2",
+                "isVisible": 1,
+                "logicalId": "channel_1-on"
+            },
+            {
+                "name": "Rafraichir",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+                    "generic_type": "DONT"
+                },
+                "configuration" : {
+                    "switch" : "read"
+                },
+                "isVisible": 0,
+                "logicalId": "refresh"
+            }
+        ]
+    }
+}

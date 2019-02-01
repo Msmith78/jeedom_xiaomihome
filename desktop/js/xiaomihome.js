@@ -15,8 +15,8 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 
 */
-$( "#typefield" ).change(function(){
-  if ($('#typefield').value() == 'aquara') {
+function typefieldChange(){
+	if ($('#typefield').value() == 'aquara') {
     $('#modelfield option:not(:selected)').prop('disabled', true);
     $('#idfield').show();
     $('#ipfield').hide();
@@ -49,6 +49,9 @@ $( "#typefield" ).change(function(){
     $('#idfield').hide();
     $('#ipfield').show();
   }
+}
+$( "#typefield" ).change(function(){
+  setTimeout(typefieldChange,100);
 });
 
 $( "#sid" ).change(function(){
@@ -57,7 +60,7 @@ $( "#sid" ).change(function(){
     $('#newmodelfield2').show();
 	$('.eqLogicAttr[data-l1key=configuration][data-l2key=applyDevice]').value($('.eqLogicAttr[data-l1key=configuration][data-l2key=applyDevice2]').value());
   }
-  else { 
+  else {
     $('#newmodelfield').show();
     $('#newmodelfield2').hide();
     $('.eqLogicAttr[data-l1key=configuration][data-l2key=applyDevice]').attr('disabled', true);
@@ -129,31 +132,86 @@ $('body').on('xiaomihome::includeDevice', function (_event,_options) {
 });
 
 $('#bt_autoDetectModule').on('click', function () {
-    bootbox.confirm('{{Etes-vous sûr de vouloir recréer toutes les commandes ? Cela supprimera les commandes existantes.}}', function (result) {
-        if (result) {
-            $.ajax({
-                type: "POST", // méthode de transmission des données au fichier php
-                url: "plugins/xiaomihome/core/ajax/xiaomihome.ajax.php",
-                data: {
-                    action: "autoDetectModule",
-                    id: $('.eqLogicAttr[data-l1key=id]').value(),
-                },
-                dataType: 'json',
-                global: false,
-                error: function (request, status, error) {
-                    handleAjaxError(request, status, error);
-                },
-                success: function (data) {
-                    if (data.state != 'ok') {
-                        $('#div_alert').showAlert({message: data.result, level: 'danger'});
-                        return;
-                    }
-                    $('#div_alert').showAlert({message: '{{Opération réalisée avec succès.}}', level: 'success'});
-                    $('.li_eqLogic[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
-                }
-            });
-        }
-    });
+    var dialog_title = '{{Recharge configuration}}';
+    var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
+    dialog_title = '{{Recharger la configuration}}';
+    dialog_message += '<label class="control-label" > {{Sélectionner le mode de rechargement de la configuration ?}} </label> ' +
+    '<div> <div class="radio"> <label > ' +
+    '<input type="radio" name="command" id="command-0" value="0" checked="checked"> {{Sans supprimer les commandes}} </label> ' +
+    '</div><div class="radio"> <label > ' +
+    '<input type="radio" name="command" id="command-1" value="1"> {{En supprimant et recréant les commandes}}</label> ' +
+    '</div> ' +
+    '</div><br>' +
+    '<label class="lbl lbl-warning" for="name">{{Attention, "En supprimant et recréant" va supprimer les commandes existantes.}}</label> ';
+    dialog_message += '</form>';
+    bootbox.dialog({
+       title: dialog_title,
+       message: dialog_message,
+       buttons: {
+           "{{Annuler}}": {
+               className: "btn-danger",
+               callback: function () {
+               }
+           },
+           success: {
+               label: "{{Démarrer}}",
+               className: "btn-success",
+               callback: function () {
+                    if ($("input[name='command']:checked").val() == "1"){
+						bootbox.confirm('{{Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes}}', function (result) {
+                            if (result) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "plugins/xiaomihome/core/ajax/xiaomihome.ajax.php",
+                                    data: {
+                                        action: "autoDetectModule",
+                                        id: $('.eqLogicAttr[data-l1key=id]').value(),
+                                        createcommand: 1,
+                                    },
+                                    dataType: 'json',
+                                    global: false,
+                                    error: function (request, status, error) {
+                                        handleAjaxError(request, status, error);
+                                    },
+                                    success: function (data) {
+                                        if (data.state != 'ok') {
+                                            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                                            return;
+                                        }
+                                        $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+                                        $('.li_eqLogic[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
+                                    }
+                                });
+                            }
+                        });
+					} else {
+						$.ajax({
+                                    type: "POST",
+                                    url: "plugins/xiaomihome/core/ajax/xiaomihome.ajax.php",
+                                    data: {
+                                        action: "autoDetectModule",
+                                        id: $('.eqLogicAttr[data-l1key=id]').value(),
+                                        createcommand: 0,
+                                    },
+                                    dataType: 'json',
+                                    global: false,
+                                    error: function (request, status, error) {
+                                        handleAjaxError(request, status, error);
+                                    },
+                                    success: function (data) {
+                                        if (data.state != 'ok') {
+                                            $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                                            return;
+                                        }
+                                        $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+                                        $('.li_eqLogic[data-eqLogic_id=' + $('.eqLogicAttr[data-l1key=id]').value() + ']').click();
+                                    }
+                                });
+					}
+            }
+        },
+    }
+});
 });
 
 $('#btn_sync').on('click', function () {
@@ -229,7 +287,7 @@ function addCmdToTable(_cmd) {
     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
     if (_cmd.subType == "binary") {
         tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
-        tr += '<span class="expertModeVisible"><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="display" data-l2key="invertBinary" />{{Inverser}}</label></span>';
+        tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="display" data-l2key="invertBinary" />{{Inverser}}</label></span>';
     }
     if (_cmd.subType == "numeric") {
         tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
@@ -239,7 +297,7 @@ function addCmdToTable(_cmd) {
     tr += '</td>';
     tr += '<td>';
     if (is_numeric(_cmd.id)) {
-      tr += '<a class="btn btn-default btn-xs cmdAction expertModeVisible" data-action="configure"><i class="fa fa-cogs"></i></a> ';
+      tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fa fa-cogs"></i></a> ';
       tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
     }
     tr += '<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
@@ -279,12 +337,12 @@ if (init(_cmd.type) == 'action') {
   tr += '<td>';
   tr += '</td><td>';
   tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
-  tr += '<input class="tooltips cmdAttr form-control input-sm expertModeVisible" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="margin-top : 5px;"> ';
-  tr += '<input class="tooltips cmdAttr form-control input-sm expertModeVisible" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="margin-top : 5px;">';
+  tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="margin-top : 5px;"> ';
+  tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="margin-top : 5px;">';
   tr += '</td>';
   tr += '<td>';
   if (is_numeric(_cmd.id)) {
-    tr += '<a class="btn btn-default btn-xs cmdAction expertModeVisible" data-action="configure"><i class="fa fa-cogs"></i></a> ';
+    tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fa fa-cogs"></i></a> ';
     tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fa fa-rss"></i> {{Tester}}</a>';
   }
   tr += '<i class="fa fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i></td>';
@@ -315,3 +373,49 @@ $('body').on('xiaomihome::notfound', function (_event,_options) {
     $('#div_alert').showAlert({message: '{{Equipement non trouvé. Veuillez vérifier l\'IP et relancer.}}', level: 'danger'});
 });
 }
+
+$('.inclusion').on('click', function () {
+  var id = $(this).attr('data-id');
+  var dialog_title = '';
+  var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
+  dialog_title = '{{Démarrer l\'inclusion d\'un nouveau module}}';
+  dialog_message += '<label class="control-label" > {{Etes vous sûr de vouloir mettre la gateway en inclusion ?}} </label> ' +
+
+  ' ';
+  dialog_message += '</form>';
+  bootbox.dialog({
+    title: dialog_title,
+    message: dialog_message,
+    buttons: {
+       "{{Annuler}}": {
+          className: "btn-danger",
+          callback: function () {
+          }
+      },
+      success: {
+        label: "{{Démarrer}}",
+        className: "btn-success",
+        callback: function () {
+			$.ajax({
+        type: "POST",
+        url: "plugins/xiaomihome/core/ajax/xiaomihome.ajax.php",
+        data: {
+            action: "InclusionGateway",
+            id: id,
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+        }
+    });
+     }
+ },
+}
+});
+});

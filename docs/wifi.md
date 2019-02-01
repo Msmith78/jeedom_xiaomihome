@@ -4,18 +4,19 @@
 
 Pour les équipements Wifi supplémentaires supportés, il faut faire un ajout manuel. Ces informations sont nécessaires :
 * Il faut renseigner leur **adresse IP**.
-* Sélectionner le **type d'équipement** dans le ménu déroulant.
-* Renseigner le **token** : Pour l'obtenir, il suffit de cliquer sur le bouton bleu "Récupérer les infos", dans le cas où le token récupéré est une suite de 0 seulement ou de f seulement, il faut alors le récupérer manuellement à l'aide d'une des procédures ci-dessous.
+* Sélectionner le **type d'équipement** dans le menu déroulant.
+* Renseigner le **token** : Pour l'obtenir, il suffit de cliquer sur le bouton bleu "Récupérer les infos". Dans le cas où le token récupéré est une suite de 0 seulement ou de f seulement, il faut alors le récupérer manuellement à l'aide d'une des procédures ci-dessous.
 
 ## Récupérer le token d'un équipement manuellement
 
 Trois méthodes existent :
-* la première avec l'outil **[Mi Toolkit](https://github.com/ultrara1n/MiToolkit)** qui va récupérer tous les token dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.
+* la première avec l'outil **[Mi Toolkit](https://github.com/ultrara1n/MiToolkit)** qui va récupérer tous les tokens dans votre application Mi Home. Cela nécessite un Android avec le mode Debug USB activable.
 * Les deux autres sont basées sur une **récupération de la base de données de Mi Home**, une pour **Android**, l'autre pour **iPhone**.
 
 ### 1ère méthode : MiToolkit
 
 Pour télécharger l'outil : [Cliquez ici](https://github.com/ultrara1n/MiToolkit/releases).
+Il vous faut aussi une version Mi Home compatible, les dernières posent problème : [ApkMirror](https://www.apkmirror.com/apk/xiaomi-inc/mihome/mihome-5-0-19-release/)
 
 * Activez **ADB** sur votre téléphone (dans les options développeur).
 * Lancez le fichier **MiToolkit.exe** en tant qu'admin, sur votre ordinateur.
@@ -47,14 +48,14 @@ Merci _pierre_ pour cette technique :
 
 Cette section traite des équipements Wifi additionnels. Il n'est pas question de Yeelight ou de la gateway Aqara.
 
-* **Xiaomi Mi Robot Vacuum** : online, statut, batterie, aspiration (force + slider, attention au delà de 77 vous dépasser le mode turbo), surface nettoyée, durée nettoyage, état des erreurs, puissance aspiration, démarrer, arrêter, pause, retour socle, fonction spot, "où es-tu ?", rafraichir.
-* **Xiaomi Smart Mi Air Purifier** : statut, qualité d'air, humidité, température, filtre, vitesse, buzzer (on/off), led (action dessus aussi), démarrer/arrêter (avec les différents modes disponibles).
+* **Xiaomi Mi Robot Vacuum** : online, statut, batterie, aspiration (force + slider, attention au delà de 77 vous dépassez le mode turbo), surface nettoyée, durée nettoyage, état des erreurs, puissance aspiration, démarrer, arrêter, pause, retour socle, fonction spot, "où es-tu ?", rafraichir.
+* **Xiaomi Smart Mi Air Purifier (y compris Pro ou V2 avec écran)** : statut, qualité d'air, humidité, température, filtre, vitesse, buzzer (on/off), led (action dessus aussi), démarrer/arrêter (avec les différents modes disponibles).
 * **Xiaomi Smart Ultrasonic Humidifier** : statut, mode, humidité, humidité cible (+slider de set), température, buzzer (statut + activation), led (statut + activation), démarrer/arrêter (avec les différents modes disponibles).
 * **Xiaomi Smart Air Quality Monitor PM2.5 Detector** : qualité d'air, batterie, rafraichir.
 * **Xiaomi Mi Power Strip Wifi** : on, off, statut, température, Intensité, puissance, rafraichir.
 * **Xiaomi Mi Power Plug Wifi** : on, off, statut, utilisation, voltage, charge voltage, charge puissance, puissance consommée, rafraichir.
-* **Xiaomi Philips Eyecare Smart Lamp** : statut, on/off, luminosité (+slider), eyecare (statut, scenes + différents modes disponibles).
-* **Xiaomi Philips Ceiling** : statut, on/off, luminosité (+slider), couleur de blanc (info+cmd), Auto CCT (statut+cmd), scènes (statut + activation scenes).
+* **Xiaomi Philips Eyecare Smart Lamp** : statut, on/off, luminosité (+slider), eyecare (statut, scènes + différents modes disponibles).
+* **Xiaomi Philips Ceiling** : statut, on/off, luminosité (+slider), couleur de blanc (info+cmd), Auto CCT (statut+cmd), scènes (statut + activation scènes).
 * **Xiaomi Philips E27** : statut, on/off, luminosité (+slider), couleur de blanc (info+cmd), Auto CCT (statut+cmd), scènes (statut + activation scènes).
 * **Xiaomi Mi Electric Rice Cooker** : non implémenté en l'état.
 * **Ventilateur** : statut, température, humidité, buzzer (statut + activation), led (statut + activation), démarrer/arrêter (avec les différents modes disponibles), info vitesse et vitesse naturelle, rotation (et les commandes pour la paramétrer, tourner).

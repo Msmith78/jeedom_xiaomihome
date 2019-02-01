@@ -1,20 +1,21 @@
 # Xiaomi Home
 
-## Présentation
+## Presentation
 
-Une présentation complète du plugin est disponible ici : [Article de présentation](https://lunarok-domotique.com/plugins-jeedom/xiaomi-home/).
+A complete presentation of the plugin is avalaible on this article : [Article de présentation, in french](https://lunarok-domotique.com/plugins-jeedom/xiaomi-home/).
 
-Le plugin implémente 3 protocoles Xiaomi, ce qui donne un éventail conséquent de matériels supportés :
+The plugin allows Jeedom to integrate 3 protocols used by Xiaomi devices :
 
-### **Le protocole zigbee Xiaomi Aqara**
-La Xiaomi Aqara Home Gateway (aussi appelée **passerelle Xiaomi**) permet d'utiliser différents capteurs Zigbee de Xiaomi. [Voir la doc Aqara](aqara.md).
+### **Zigbee protocol with Xiaomi Aqara**
+La Xiaomi Aqara Home Gateway (aussi appelée **passerelle Xiaomi**) permet d'utiliser différents capteurs Zigbee de Xiaomi. [See doc Aqara](aqara.md).
 
-### **Les lumières Yeelight**
+### **Lights Yeelight**
 
-Les lampes qui supportent le protocole Yeelight Wifi. [Voir la doc Yeelight](yeelight.md).
-### **Les Appliances Wifi**
+Les lampes qui supportent le protocole Yeelight Wifi. [See doc Yeelight](yeelight.md).
 
-Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi. Ce protocole est implémenté dans le plugin et rend compatibles les appliances l'utilisant. [Voir la doc Appliances Wifi](wifi.md).
+### **Wifi Appliances**
+
+Il existe aussi un protocole Xiaomi commun à beaucoup de périphériques Wifi. Ce protocole est implémenté dans le plugin et rend compatibles les appliances l'utilisant. [See doc Wifi Appliances](wifi.md).
 
 > Et les périphériques Bluetooth ?
 >

@@ -77,7 +77,6 @@ def refresh(message):
 	i = 0
 	while i<3:
 		try:
-			
 			device = message['model']
 			result={}
 			status ={}
@@ -92,12 +91,14 @@ def refresh(message):
 					jsoninfo['id'] = randid
 					info = json.dumps(jsoninfo)
 					Packet.setPlainData(info)
-					logging.debug(info)
 					SendRcv(Packet,message['dest'])
-					logging.debug(Packet.getPlainData())
 					dict_params = json.loads(info)
+					logging.debug('1')
 					if 'params' in info:
-						dict_result = json.loads(str(Packet.getPlainData()))
+						if device == 'mija360':
+							dict_result = json.loads(str(Packet.getPlainData())[:-1])
+						else:
+							dict_result = json.loads(str(Packet.getPlainData()))
 						results = dict_result['result']
 						i=0
 						for param in dict_params['params']:
@@ -120,7 +121,7 @@ def refresh(message):
 			break
 		except Exception, e:
 			if i == 2:
-				logging.debug(str(e))
+				logging.debug(e)
 		i = i + 1
 	return
 

@@ -34,6 +34,7 @@ DICT_REFRESH_WIFI ={'purifier' : ['{"id":1,"method":"get_prop","params":["power"
 					'fan' :['{"id":1,"method":"get_prop","params":["temp_dec", "humidity", "angle", "speed", "poweroff_time", "power", "ac_power", "battery", "angle_enable", "speed_level", "natural_level", "child_lock", "buzzer", "led_b"]}'],\
 					'philipsceiling' :['{"id":1,"method":"get_prop","params":["power", "bright", "snm", "dv", "cctsw", "bl", "mb"]}','{"id":1,"method":"get_prop","params":["ac", "ms", "sw", "cct"]}'],\
 					'philipsmono' :['{"id":1,"method":"get_prop","params":["power","bright","cct","snm","dv"]}'],\
+					'mija360' :['{"id":1,"method":"get_prop","params":["light","motion_record","flip","watermark","sdcard_status","power","wdr","night_mode","mini_level","full_color","max_client","track","improve_program","protocolversion"]}']
 	}
 
 DICT_STATE_WIFI ={'vacuum' : {
